@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 const BASE_URL = 'https://www.ris.gov.tw/rs-opendata/api/v1/datastore'
 const population = 'ODRP019'
 const year = '109'
