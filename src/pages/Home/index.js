@@ -91,7 +91,7 @@ const Home = () => {
       <Nav />
       <div className='flex flex-col justify-start items-center md:items-start flex-grow h-screen md:pt-32 bg-gray-100'>
         <Select siteId={siteId} />
-        <Chart />
+        <Chart population={population} />
       </div>
     </div>
   )
