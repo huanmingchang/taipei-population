@@ -32,7 +32,7 @@ const Chart = ({ population, curr }) => {
   }
 
   return (
-    <div className='px-10 pt-10 flex-grow w-full h-full'>
+    <div className='px-10 pb-10 pt-5 flex-grow w-full h-full'>
       {data.length === 0 ? (
         <div>資料載入中請稍候</div>
       ) : (
