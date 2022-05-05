@@ -7,14 +7,16 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts'
+import { useEffect } from 'react'
 
-const Chart = ({ population, curr }) => {
-  let data = []
-  if (population.length === 0) {
-    data = []
-  } else {
-    population.map((item) => {
-      if (curr === item.siteId) {
+const Chart = ({ population, currDistrict }) => {
+  function fetchChartData() {
+    let data = []
+
+    if (population.length === 0) return []
+
+    population.forEach((item) => {
+      if (currDistrict === item.siteId) {
         data = [
           {
             name: '共同生活戶',
@@ -29,15 +31,21 @@ const Chart = ({ population, curr }) => {
         ]
       }
     })
+
+    return data
   }
+
+  useEffect(() => {
+    fetchChartData()
+  }, [population])
 
   return (
     <div className='px-10 pb-10 pt-5 flex-grow w-full h-full'>
-      {data.length === 0 ? (
+      {fetchChartData().length === 0 ? (
         <div>資料載入中請稍候</div>
       ) : (
         <ResponsiveContainer width='100%' height='100%'>
-          <BarChart width='100%' height='100%' data={data}>
+          <BarChart width='100%' height='100%' data={fetchChartData()}>
             <CartesianGrid opacity={0.5} vertical={false} />
             <XAxis dataKey='name' axisLine={false} tickLine={false} />
             <YAxis
