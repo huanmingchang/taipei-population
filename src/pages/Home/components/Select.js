@@ -1,16 +1,16 @@
 import { useEffect, useRef } from 'react'
 
-const Select = ({ siteId, setCurr, curr }) => {
+const Select = ({ siteId, setCurrDistrict, currDistrict }) => {
   const selectValue = useRef()
 
   // 當選擇有變更時會更改父層的資料
   function handleSelectChange(e) {
-    setCurr(e.target.value)
+    setCurrDistrict(e.target.value)
   }
 
   // 一開始先給一個預設值
   useEffect(() => {
-    selectValue.current = curr
+    selectValue.current = currDistrict
   }, [])
 
   return (

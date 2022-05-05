@@ -2,13 +2,13 @@ import Nav from './components/Nav'
 import Select from './components/Select'
 import Chart from './components/Chart'
 import { GET_TAIPEI_DATA } from '../../global/api'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 
 const Home = () => {
   const [data, setData] = useState([])
   const [siteId, setSiteId] = useState([])
   const [population, setPopulation] = useState([])
-  const [curr, setCurr] = useState('臺北市松山區')
+  const [currDistrict, setCurrDistrict] = useState('臺北市松山區')
 
   // 抓取 api 資料
   async function fetchData() {
@@ -19,28 +19,25 @@ const Home = () => {
 
   // 將 data 的行政區資料抓出來並存在 siteId 裡面
   function fetchSiteId() {
-    let arr = []
-    data.map((item) => {
-      arr.push(item.site_id)
+    const siteIdArr = data.map((item) => {
+      return item.site_id
     })
 
-    let newArr = [...new Set(arr)]
-    setSiteId(newArr)
+    const newSiteIdArr = [...new Set(siteIdArr)]
+    setSiteId(newSiteIdArr)
   }
 
   // 將 data 的人口資料取出
   function fetchPopulation() {
-    let map = []
-
     // 遍歷行政區先建立一個物件
-    siteId.map((item) => {
-      map.push({
+    const map = siteId.map((item) => {
+      return {
         siteId: item,
         ordinary_m: [],
         ordinary_f: [],
         single_m: [],
         single_f: [],
-      })
+      }
     })
 
     // 遍歷 data 和行政區做比對，把對應的人口數 push 到陣列當中，並轉換成數字以利後續計算
@@ -56,15 +53,14 @@ const Home = () => {
     })
 
     // 建立一個新陣列，把之前 map 的人口資料做加總
-    let newMap = []
-    map.map((item) => {
-      newMap.push({
+    const newMap = map.map((item) => {
+      return {
         ...item,
         ordinary_m: sum(item.ordinary_m),
         ordinary_f: sum(item.ordinary_f),
         single_m: sum(item.single_m),
         single_f: sum(item.single_f),
-      })
+      }
     })
     setPopulation(newMap)
   }
@@ -85,14 +81,18 @@ const Home = () => {
 
   useEffect(() => {
     fetchPopulation()
-  }, [data])
+  }, [siteId])
 
   return (
     <div className='flex flex-col md:flex-row max-w-[1280px] mx-auto'>
       <Nav />
       <div className='flex flex-col justify-start items-center md:items-start shrink h-screen w-full md:pt-32 bg-gray-100'>
-        <Select siteId={siteId} setCurr={setCurr} curr={curr} />
-        <Chart population={population} curr={curr} />
+        <Select
+          siteId={siteId}
+          setCurrDistrict={setCurrDistrict}
+          currDistrict={currDistrict}
+        />
+        <Chart population={population} currDistrict={currDistrict} />
       </div>
     </div>
   )
