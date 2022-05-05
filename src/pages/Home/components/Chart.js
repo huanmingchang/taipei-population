@@ -8,23 +8,27 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 
-const Chart = ({ population }) => {
+const Chart = ({ population, curr }) => {
   let data = []
   if (population.length === 0) {
     data = []
   } else {
-    data = [
-      {
-        name: '共同生活戶',
-        male: population[0].ordinary_m,
-        female: population[0].ordinary_f,
-      },
-      {
-        name: '獨立生活戶',
-        male: population[0].single_m,
-        female: population[0].single_f,
-      },
-    ]
+    population.map((item) => {
+      if (curr === item.siteId) {
+        data = [
+          {
+            name: '共同生活戶',
+            male: item.ordinary_m,
+            female: item.ordinary_f,
+          },
+          {
+            name: '獨立生活戶',
+            male: item.single_m,
+            female: item.single_f,
+          },
+        ]
+      }
+    })
   }
 
   return (
@@ -39,9 +43,10 @@ const Chart = ({ population }) => {
             <YAxis
               axisLine={false}
               tickLine={false}
-              tickCount={10}
-              ticks={[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
-              domain={[0, 100]}
+              ticks={[
+                0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140,
+              ]}
+              domain={[0, 150]}
             />
             <Legend
               formatter={(value) => {

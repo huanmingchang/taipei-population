@@ -8,6 +8,7 @@ const Home = () => {
   const [data, setData] = useState([])
   const [siteId, setSiteId] = useState([])
   const [population, setPopulation] = useState([])
+  const [curr, setCurr] = useState('臺北市松山區')
 
   // 抓取 api 資料
   async function fetchData() {
@@ -90,8 +91,8 @@ const Home = () => {
     <div className='flex flex-col md:flex-row max-w-[1280px] mx-auto'>
       <Nav />
       <div className='flex flex-col justify-start items-center md:items-start flex-grow h-screen w-full md:pt-32 bg-gray-100'>
-        <Select siteId={siteId} />
-        <Chart population={population} />
+        <Select siteId={siteId} setCurr={setCurr} curr={curr} />
+        <Chart population={population} curr={curr} />
       </div>
     </div>
   )
